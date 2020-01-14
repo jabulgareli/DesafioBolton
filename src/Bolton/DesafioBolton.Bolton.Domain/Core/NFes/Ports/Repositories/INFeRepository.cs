@@ -8,7 +8,7 @@ namespace DesafioBolton.Bolton.Domain.Core.NFes.Ports.Repositories
 {
     public interface INFeRepository
     {
-        Task CreateAsync(NFe nfe);
+        Task CreateOrUpdateAsync(NFe nfe);
         Task<NFe> FindAsync(string AccessKey);
     }
 }

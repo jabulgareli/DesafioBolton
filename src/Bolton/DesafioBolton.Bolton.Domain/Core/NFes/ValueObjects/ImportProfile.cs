@@ -6,7 +6,19 @@ namespace DesafioBolton.Bolton.Domain.Core.NFes.ValueObjects
 {
     public class ImportProfile
     {
-        public int CurrentCursor { get; set; }
-        private int Limit { get; set; }
+        public string CurrentPage { get; set; }
+    
+        public static ImportProfile CreateEmpty()
+        {
+            return new ImportProfile
+            {
+                CurrentPage = null
+            };
+        }
+
+        public bool IsEmpty()
+        {
+            return string.IsNullOrEmpty(CurrentPage);
+        }
     }
 }
