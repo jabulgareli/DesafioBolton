@@ -20,6 +20,15 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.Adapters
         private INFeRepository _nfeRepository;
         private IImportProfileRepository _importProfileRepository;
 
+        public ArquiveiNFeImportService(IConfiguration configuration,
+                                        INFeRepository nfeRepository,
+                                        IImportProfileRepository importProfileRepository)
+        {
+            _configuration = configuration;
+            _nfeRepository = nfeRepository;
+            _importProfileRepository = importProfileRepository;
+        }
+
         public async Task ExecuteAsync()
         {
             var integrationConfiguration = new ImportIntegrationConfiguration(_configuration["Arquivei:Uri"],

@@ -6,11 +6,15 @@
 
   <ItemGroup>
     <Folder Include="Adapters\" />
-    <Folder Include="Context\Mappers\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DesafioBolton.Bolton.Domain\DesafioBolton.Bolton.Domain.csproj" />
   </ItemGroup>
 
 </Project>

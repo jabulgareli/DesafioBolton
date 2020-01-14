@@ -1,6 +1,5 @@
 ﻿using DesafioBolton.Bolton.Domain.Core.NFes.Exceptions;
 using DesafioBolton.Bolton.Domain.Core.NFes.ValueObjects;
-using DesafioBolton.Bolton.Domain.Properties;
 using System;
 using System.Collections.Generic;
 using System.Text;
