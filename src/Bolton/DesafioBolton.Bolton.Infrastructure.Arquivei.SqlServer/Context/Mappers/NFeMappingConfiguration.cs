@@ -14,6 +14,7 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.SqlServer.Context.Mappers
             builder.ToTable("NFE");
 
             builder.HasKey(nfe => nfe.AccessKey);
+            builder.Property(nfe => nfe.Amount).HasColumnType("DECIMAL(18,6)");
         }
     }
 }

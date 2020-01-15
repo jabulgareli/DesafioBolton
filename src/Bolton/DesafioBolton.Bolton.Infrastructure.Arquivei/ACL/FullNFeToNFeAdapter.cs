@@ -6,9 +6,9 @@ using System.Text;
 
 namespace DesafioBolton.Bolton.Infrastructure.Arquivei.ACL
 {
-    public static class PlainNFeToNFeAdapter
+    public static class FullNFeToNFeAdapter
     {
-        public static IList<NFe> FromPlainNFes(IList<PlainNFe> nfes)
+        public static NFe FromFullNFe(nfeProc nfe)
         {
             return null;
         }

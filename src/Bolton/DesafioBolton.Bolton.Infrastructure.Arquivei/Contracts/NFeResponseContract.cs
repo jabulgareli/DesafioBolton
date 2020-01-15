@@ -7,7 +7,7 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.Contracts
     public class NFeResponseContract
     {
         public Status Status { get; set; }
-        public IList<PlainNFe> PlainNFes { get; set; }
+        public IList<PlainNFe> Data { get; set; }
         public Page Page { get; set; }
         public int Count { get; set; }
         public string Signature { get; set; }

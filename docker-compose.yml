@@ -1,0 +1,6 @@
+docker network create bolton_network
+
+docker network connect bolton_network sqlserver
+
+docker network connect bolton_network arquivei_api
+docker network connect bolton_network bolton_api

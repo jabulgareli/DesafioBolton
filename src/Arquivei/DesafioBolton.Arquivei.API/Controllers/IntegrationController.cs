@@ -34,7 +34,7 @@ namespace DesafioBolton.Arquivei.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, string.Empty);
             }
             
         }

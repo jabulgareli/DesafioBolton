@@ -3,6 +3,7 @@ using DesafioBolton.Bolton.Domain.Core.NFes.Ports.Services;
 using DesafioBolton.Bolton.Domain.Core.NFes.ValueObjects;
 using DesafioBolton.Bolton.Infrastructure.Arquivei.ACL;
 using DesafioBolton.Bolton.Infrastructure.Arquivei.Contracts;
+using DesafioBolton.Bolton.Infrastructure.Arquivei.Services;
 using DesafioBolton.Bolton.Infrastructure.Arquivei.ValueObjects;
 using Flurl.Http;
 using Microsoft.Extensions.Configuration;
@@ -38,10 +39,13 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.Adapters
 
 
             var result = await integrationConfiguration.GetFullNFeUri(importProfile)
+                                                       .WithHeader("x-api-id", _configuration["Arquivei:ApiId"])
+                                                       .WithHeader("x-api-key", _configuration["Arquivei:ApiKey"])
+                                                       .WithHeader("Content-Type", "application/json")
                                                        .AllowHttpStatus("2XX")
                                                        .GetJsonAsync<NFeResponseContract>();
 
-            if (!result.PlainNFes.Any())
+            if (!result.Data.Any())
                 return;
 
             await ImportReturnedNFes(result);
@@ -67,11 +71,13 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.Adapters
                 throw new ArgumentNullException(nameof(result));
             }
 
-            var convertedNFes = PlainNFeToNFeAdapter.FromPlainNFes(result.PlainNFes);
-
-            foreach (var nfe in convertedNFes)
+            foreach (var nfeBase64 in result.Data)
             {
-                await _nfeRepository.CreateOrUpdateAsync(nfe);
+                var nfe = Base64ToNFeService.FromBase64(nfeBase64.Xml);
+
+                var convertedNFe = FullNFeToNFeAdapter.FromFullNFe(nfe);
+
+                await _nfeRepository.CreateOrUpdateAsync(convertedNFe);
             }
         }
     }

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DesafioBolton.Bolton.Application\DesafioBolton.Bolton.Application.csproj" />
+    <ProjectReference Include="..\DesafioBolton.Bolton.Infrastructure.Arquivei.SqlServer\DesafioBolton.Bolton.Infrastructure.Arquivei.SqlServer.csproj" />
     <ProjectReference Include="..\DesafioBolton.Bolton.Infrastructure.Arquivei\DesafioBolton.Bolton.Infrastructure.Arquivei.csproj" />
   </ItemGroup>
 
