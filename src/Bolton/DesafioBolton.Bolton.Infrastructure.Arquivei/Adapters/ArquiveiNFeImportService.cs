@@ -1,7 +1,6 @@
 ﻿using DesafioBolton.Bolton.Domain.Core.NFes.Ports.Repositories;
 using DesafioBolton.Bolton.Domain.Core.NFes.Ports.Services;
 using DesafioBolton.Bolton.Domain.Core.NFes.ValueObjects;
-using DesafioBolton.Bolton.Infrastructure.Arquivei.ACL;
 using DesafioBolton.Bolton.Infrastructure.Arquivei.Contracts;
 using DesafioBolton.Bolton.Infrastructure.Arquivei.Services;
 using DesafioBolton.Bolton.Infrastructure.Arquivei.ValueObjects;
@@ -37,31 +36,35 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.Adapters
 
             var importProfile = await _importProfileRepository.GetCurrentAsync();
 
+            var hasNextPage = true;
+            while (hasNextPage)
+            {
+                var result = await integrationConfiguration.GetFullNFeUri(importProfile)
+                                                           .WithHeader("x-api-id", _configuration["Arquivei:ApiId"])
+                                                           .WithHeader("x-api-key", _configuration["Arquivei:ApiKey"])
+                                                           .WithHeader("Content-Type", "application/json")
+                                                           .AllowHttpStatus("2XX")
+                                                           .GetJsonAsync<NFeResponseContract>();
 
-            var result = await integrationConfiguration.GetFullNFeUri(importProfile)
-                                                       .WithHeader("x-api-id", _configuration["Arquivei:ApiId"])
-                                                       .WithHeader("x-api-key", _configuration["Arquivei:ApiKey"])
-                                                       .WithHeader("Content-Type", "application/json")
-                                                       .AllowHttpStatus("2XX")
-                                                       .GetJsonAsync<NFeResponseContract>();
+                if (!result.Data.Any())
+                    return;
 
-            if (!result.Data.Any())
-                return;
-
-            await ImportReturnedNFes(result);
-            await UpdateImportProfile(importProfile, result);
+                await ImportReturnedNFes(result);
+                importProfile = await UpdateImportProfile(importProfile, result);
+                hasNextPage = result.Count > 0;
+            }
         }
 
-        private async Task UpdateImportProfile(ImportProfile importProfile, NFeResponseContract result)
+        private async Task<ImportProfile> UpdateImportProfile(ImportProfile importProfile, NFeResponseContract result)
         {
             if (importProfile is null)
             {
-                throw new ArgumentNullException(nameof(importProfile));
+                importProfile = ImportProfile.CreateEmpty();
             }
 
             importProfile.CurrentPage = result.Page.Next;
 
-            await _importProfileRepository.CreateOrUpdateAsync(importProfile);
+            return await _importProfileRepository.CreateOrUpdateAsync(importProfile);            
         }
 
         private async Task ImportReturnedNFes(NFeResponseContract result)
@@ -75,9 +78,7 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.Adapters
             {
                 var nfe = Base64ToNFeService.FromBase64(nfeBase64.Xml);
 
-                var convertedNFe = FullNFeToNFeAdapter.FromFullNFe(nfe);
-
-                await _nfeRepository.CreateOrUpdateAsync(convertedNFe);
+                await _nfeRepository.CreateOrUpdateAsync(nfe);
             }
         }
     }

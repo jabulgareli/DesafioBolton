@@ -17,7 +17,7 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.SqlServer.Adapters
             _context = context;
         }
 
-        public async Task CreateOrUpdateAsync(ImportProfile profile)
+        public async Task<ImportProfile> CreateOrUpdateAsync(ImportProfile profile)
         {
             if (profile is null)
             {
@@ -30,11 +30,12 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.SqlServer.Adapters
             {
                 _context.Add(profile);
                 await _context.SaveChangesAsync();
-                return;
+                return profile;
             }
 
             _context.Entry(current).CurrentValues.SetValues(profile);
             await _context.SaveChangesAsync();
+            return current;
         }
 
         public async Task<ImportProfile> GetCurrentAsync()

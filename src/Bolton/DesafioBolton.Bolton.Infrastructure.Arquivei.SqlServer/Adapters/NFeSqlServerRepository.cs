@@ -41,7 +41,7 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.SqlServer.Adapters
 
         public async Task<NFe> FindAsync(string AccessKey)
         {
-            return await _context.NFes.FirstOrDefaultAsync(n => n.AccessKey.Equals(n.AccessKey));
+            return await _context.NFes.FirstOrDefaultAsync(n => n.AccessKey == AccessKey);
         }
     }
 }
