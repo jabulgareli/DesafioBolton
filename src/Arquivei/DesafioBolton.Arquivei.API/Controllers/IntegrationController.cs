@@ -24,6 +24,8 @@ namespace DesafioBolton.Arquivei.API.Controllers
         }
 
         [HttpPost("nfe")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Nfe()
         {
             try
