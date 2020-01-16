@@ -10,7 +10,7 @@ namespace DesafioBolton.Bolton.Cross.IoC.RegisterContexts
     {
         public static void Register(IServiceCollection services)
         {
-            services.AddScoped<INfeIntegrationAppService, NfeIntegrationAppService>();
+            services.AddScoped<INfeAppService, NfeAppService>();
         }
     }
 }

@@ -1,2 +1,4 @@
 docker build -f src\Bolton\DesafioBolton.Bolton.API\DOCKERFILE -t jabulgareli/bolton-api .
-docker build -f src\Arquivei\DesafioBolton.Arquivei.API\DOCKERFILE -t bolton-api .
+docker build -f src\Arquivei\DesafioBolton.Arquivei.API\DOCKERFILE -t jabulgareli/arquivei-api .
+docker push jabulgareli/bolton-api
+docker push jabulgareli/arquivei-api

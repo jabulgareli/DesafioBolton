@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DesafioBolton.Bolton.API.Model;
+using DesafioBolton.Bolton.Application.NFes;
 using DesafioBolton.Bolton.Domain.Core.NFes.Aggregates;
 using DesafioBolton.Bolton.Domain.Core.NFes.Ports.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -15,13 +16,11 @@ namespace DesafioBolton.Bolton.API.Controllers
     [ApiController]
     public class NFeController : ControllerBase
     {
-        private readonly ILogger<NFeController> _logger;
-        private readonly INFeRepository _nFeRepository;
+        private readonly INfeAppService _nfeAppService;
 
-        public NFeController(ILogger<NFeController> logger, INFeRepository nFeRepository)
+        public NFeController(INfeAppService nfeAppService)
         {
-            _logger = logger;
-            _nFeRepository = nFeRepository;
+            _nfeAppService = nfeAppService;
         }
 
         [HttpGet("{accessKey}/amount")]
@@ -34,7 +33,7 @@ namespace DesafioBolton.Bolton.API.Controllers
 
             try
             {
-                var nfe = await _nFeRepository.FindAsync(accessKey);
+                var nfe = await _nfeAppService.FindNFeByAccessKeyAsync(accessKey);
 
                 if (nfe is null)
                 {
@@ -45,7 +44,6 @@ namespace DesafioBolton.Bolton.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -60,7 +58,7 @@ namespace DesafioBolton.Bolton.API.Controllers
 
             try
             {
-                var nfe = await _nFeRepository.FindAsync(accessKey);
+                var nfe = await _nfeAppService.FindNFeByAccessKeyAsync(accessKey);
 
                 if (nfe is null)
                 {
@@ -71,7 +69,6 @@ namespace DesafioBolton.Bolton.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

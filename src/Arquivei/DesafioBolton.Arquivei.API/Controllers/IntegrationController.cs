@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DesafioBolton.Bolton.Application.NFe;
+using DesafioBolton.Bolton.Application.NFes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,14 +14,11 @@ namespace DesafioBolton.Arquivei.API.Controllers
     [ApiController]
     public class IntegrationController : ControllerBase
     {
-        private readonly INfeIntegrationAppService _nfeIntegrationApp;
-        private readonly ILogger<IntegrationController> _logger;
+        private readonly INfeAppService _nfeIntegrationApp;
 
-        public IntegrationController(INfeIntegrationAppService nfeIntegrationApp, 
-            ILogger<IntegrationController> logger)
+        public IntegrationController(INfeAppService nfeIntegrationApp)
         {
             _nfeIntegrationApp = nfeIntegrationApp;
-            _logger = logger;
         }
 
         [HttpPost("nfe")]
@@ -30,12 +28,11 @@ namespace DesafioBolton.Arquivei.API.Controllers
         {
             try
             {
-                await _nfeIntegrationApp.Run();
+                await _nfeIntegrationApp.RunIntegrationAsync();
                 return Ok();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, string.Empty);
             }
             
