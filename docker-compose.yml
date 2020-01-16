@@ -1,6 +1,7 @@
 version: "3"
 services:
     sqlserver:
+        container_name: sqlserver
         image: "mcr.microsoft.com/mssql/server"
         environment:
             SA_PASSWORD: "yourStrong(!)Password"
@@ -8,12 +9,14 @@ services:
         ports:
             - "1433:1433"
     arquivei-api:
+        container_name: arquivei-api
         image: jabulgareli/arquivei-api
         ports:
             - "5001:80"
         links:
             - sqlserver
     bolton-api:
+        container_name: bolton-api  
         image: jabulgareli/bolton-api
         ports:
             - "5000:80"
