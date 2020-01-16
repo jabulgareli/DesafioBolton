@@ -34,11 +34,12 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.Adapters
             var integrationConfiguration = new ImportIntegrationConfiguration(_configuration["Arquivei:Uri"],
                                                                               _configuration["Arquivei:EndPointNFe"]);
 
-            var importProfile = await _importProfileRepository.GetCurrentAsync();
-
             var hasNextPage = true;
+
             while (hasNextPage)
             {
+                var importProfile = await _importProfileRepository.GetCurrentAsync();
+
                 var result = await integrationConfiguration.GetFullNFeUri(importProfile)
                                                            .WithHeader("x-api-id", _configuration["Arquivei:ApiId"])
                                                            .WithHeader("x-api-key", _configuration["Arquivei:ApiKey"])
@@ -50,12 +51,13 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.Adapters
                     return;
 
                 await ImportReturnedNFes(result);
-                importProfile = await UpdateImportProfile(importProfile, result);
+                await UpdateImportProfile(importProfile, result);
+
                 hasNextPage = result.Count > 0;
             }
         }
 
-        private async Task<ImportProfile> UpdateImportProfile(ImportProfile importProfile, NFeResponseContract result)
+        private async Task UpdateImportProfile(ImportProfile importProfile, NFeResponseContract result)
         {
             if (importProfile is null)
             {
@@ -64,7 +66,7 @@ namespace DesafioBolton.Bolton.Infrastructure.Arquivei.Adapters
 
             importProfile.CurrentPage = result.Page.Next;
 
-            return await _importProfileRepository.CreateOrUpdateAsync(importProfile);            
+            await _importProfileRepository.CreateOrUpdateAsync(importProfile);            
         }
 
         private async Task ImportReturnedNFes(NFeResponseContract result)

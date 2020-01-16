@@ -64,14 +64,23 @@ namespace DesafioBolton.Bolton.API
 
         private static void UpdateDatabase(IApplicationBuilder app)
         {
-            using (var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope())
+            try
             {
-                using (var context = serviceScope.ServiceProvider.GetService<BoltonContext>())
+                using (var serviceScope = app.ApplicationServices
+                    .GetRequiredService<IServiceScopeFactory>()
+                    .CreateScope())
                 {
-                    context.Database.Migrate();
+                    using (var context = serviceScope.ServiceProvider.GetService<BoltonContext>())
+                    {
+                        if (context.Database.is)
+                        context.Database.Migrate();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
     }

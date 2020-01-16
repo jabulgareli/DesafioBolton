@@ -57,20 +57,6 @@ namespace DesafioBolton.Arquivei.API
             }
 
             app.UseMvc();
-
-            UpdateDatabase(app);
-        }
-        private static void UpdateDatabase(IApplicationBuilder app)
-        {
-            using (var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope())
-            {
-                using (var context = serviceScope.ServiceProvider.GetService<BoltonContext>())
-                {
-                    context.Database.Migrate();
-                }
-            }
         }
     }
 }
