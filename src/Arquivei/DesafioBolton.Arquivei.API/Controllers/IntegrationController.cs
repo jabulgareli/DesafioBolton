@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DesafioBolton.Bolton.Application.NFe;
 using DesafioBolton.Bolton.Application.NFes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-﻿using DesafioBolton.Bolton.Application.NFe;
+﻿using DesafioBolton.Bolton.Application.NFes;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
