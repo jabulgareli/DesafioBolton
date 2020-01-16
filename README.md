@@ -24,7 +24,7 @@ Também foi desenvolvido um controle de estado que guarda a posição da página
 
 ## Como executar
 
-Como já mencionado o projeto utiliza containers Docker, para execução basta realizar o download do arquivo ![docker-compose.yml](docker-compose.yml), abrir o bash e navegar até a pasta do docker-compose.yml e executar o comando via bash abaixo:
+Como já mencionado o projeto utiliza containers Docker, para execução basta realizar o download do arquivo [docker-compose.yml](docker-compose.yml), abrir o bash e navegar até a pasta do docker-compose.yml e executar o comando via bash abaixo:
 
     docker-compose up
 
