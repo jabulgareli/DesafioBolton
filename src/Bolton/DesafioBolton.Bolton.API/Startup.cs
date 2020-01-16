@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using DesafioBolton.Bolton.Cross.IoC;
 using DesafioBolton.Bolton.Infrastructure.Arquivei.SqlServer.Context;
@@ -33,7 +34,7 @@ namespace DesafioBolton.Bolton.API
 
             services.AddDbContext<BoltonContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("Bolton"),
-                sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(3)));
+                sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(10)));
 
 
             services.AddSwaggerGen(c =>
@@ -64,6 +65,9 @@ namespace DesafioBolton.Bolton.API
 
         private static void UpdateDatabase(IApplicationBuilder app)
         {
+            //Wait for sqlserver
+            Thread.Sleep(15000);
+
             using (var serviceScope = app.ApplicationServices
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
