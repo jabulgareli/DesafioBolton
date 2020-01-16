@@ -60,5 +60,5 @@ Para encerrar a aplicação, execute o comando abaixo:
 
 Melhoria de escalabilidade/controle de custo caso venha a existir segregação de integração para mais de um cliente (muitas notas fiscais), sendo algumas possibilidades:
 - Executar a importação das notas via mensageria
-- Permitir que o container execute somente quando 
+- Permitir que o container de integração (Arquivei API) execute e termine em cada integração, economizando processamento de máquina
 
