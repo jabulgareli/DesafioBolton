@@ -15,10 +15,15 @@ services:
             - "5001:80"
         links:
             - sqlserver
+        depends:
+            - sqlserver
+            - bolton-api
     bolton-api:
         container_name: bolton-api  
         image: jabulgareli/bolton-api
         ports:
             - "5000:80"
         links:
+            - sqlserver
+         depends:
             - sqlserver
