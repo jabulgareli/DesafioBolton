@@ -12,7 +12,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DesafioBolton.Bolton.Cross.IoC\DesafioBolton.Bolton.Cross.IoC.csproj" />
+    <ProjectReference Include="..\DesafioBolton.Bolton.Domain\DesafioBolton.Bolton.Domain.csproj" />
+    <ProjectReference Include="..\DesafioBolton.Bolton.Infrastructure.Arquivei.SqlServer\DesafioBolton.Bolton.Infrastructure.Arquivei.SqlServer.csproj" />
   </ItemGroup>
 
 </Project>
